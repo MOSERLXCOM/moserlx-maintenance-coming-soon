@@ -1,0 +1,72 @@
+/* Admin styles for Maintenance & Coming Soon by MOSERLX */
+
+.mlx-mcs-wrap h1 {
+	margin-bottom: 1rem;
+}
+
+/* Status bar shown at the top of the settings page */
+.mlx-mcs-status-bar {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: 600;
+	margin-bottom: 1.5rem;
+	border: 1px solid transparent;
+}
+
+.mlx-mcs-status-bar--active {
+	background: #fef2f2;
+	border-color: #fca5a5;
+	color: #b91c1c;
+}
+
+.mlx-mcs-status-bar--inactive {
+	background: #f0fdf4;
+	border-color: #86efac;
+	color: #15803d;
+}
+
+/* Pulsing dot indicator */
+.mlx-mcs-dot {
+	display: inline-block;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.mlx-mcs-dot--on {
+	background: #ef4444;
+	box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+	animation: mlx-mcs-pulse 1.8s infinite;
+}
+
+.mlx-mcs-dot--off {
+	background: #22c55e;
+}
+
+@keyframes mlx-mcs-pulse {
+	0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+	70%  { box-shadow: 0 0 0 7px rgba(239, 68, 68, 0); }
+	100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Section headings */
+.mlx-mcs-section-title {
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #555;
+	border-bottom: 1px solid #e2e8f0;
+	padding-bottom: 6px;
+	margin: 2rem 0 0.5rem;
+}
+
+/* Keep the wp_editor inside the table cell without overflowing */
+.mlx-mcs-wrap .wp-editor-container {
+	max-width: 100%;
+}
