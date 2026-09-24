@@ -28,6 +28,11 @@ class MLX_MCS_Admin {
 		add_action( 'admin_notices', array( $this, 'show_saved_notice' ) );
 		add_action( 'admin_post_mlx_mcs_save', array( $this, 'handle_save' ) );
 
+		// Admin bar status indicator.
+		add_action( 'admin_bar_menu',        array( $this, 'add_admin_bar_notice' ), 100 );
+		add_action( 'wp_enqueue_scripts',    array( $this, 'enqueue_admin_bar_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_bar_styles' ) );
+
 		// "Settings" link on the plugins list page.
 		add_filter(
 			'plugin_action_links_' . plugin_basename( MLX_MCS_PLUGIN_FILE ),
@@ -179,6 +184,79 @@ class MLX_MCS_Admin {
 		$options = MLX_MCS_Options::get_all();
 
 		require MLX_MCS_PLUGIN_DIR . 'admin/partials/settings-page.php';
+	}
+
+	/**
+	 * Adds a status indicator to the admin bar when the plugin is active.
+	 *
+	 * Fires on both the frontend (when admin bar is shown) and in wp-admin.
+	 *
+	 * @param WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 * @return void
+	 */
+	public function add_admin_bar_notice( $wp_admin_bar ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$options = MLX_MCS_Options::get_all();
+
+		if ( ! $options['enabled'] ) {
+			return;
+		}
+
+		$label = 'coming_soon' === $options['mode']
+			? __( 'Coming Soon: ON', 'moserlx-maintenance-coming-soon' )
+			: __( 'Maintenance: ON', 'moserlx-maintenance-coming-soon' );
+
+		$wp_admin_bar->add_node(
+			array(
+				'id'    => 'mlx-mcs-status',
+				'title' => esc_html( $label ),
+				'href'  => admin_url( 'options-general.php?page=' . self::MENU_SLUG ),
+				'meta'  => array(
+					'title' => esc_attr__( 'Maintenance & Coming Soon — click to manage settings', 'moserlx-maintenance-coming-soon' ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Enqueues inline CSS for the admin bar status node.
+	 *
+	 * Hooked to both wp_enqueue_scripts (frontend) and admin_enqueue_scripts (backend)
+	 * so the styles load wherever the admin bar appears.
+	 *
+	 * @return void
+	 */
+	public function enqueue_admin_bar_styles() {
+		if ( ! is_admin_bar_showing() || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$options = MLX_MCS_Options::get_all();
+
+		if ( ! $options['enabled'] ) {
+			return;
+		}
+
+		// Red for maintenance (urgency), blue for coming soon (informational).
+		$bg_color = 'coming_soon' === $options['mode'] ? '#2271b1' : '#d63638';
+
+		$css = sprintf(
+			'#wp-admin-bar-mlx-mcs-status > .ab-item {
+				background-color: %1$s !important;
+				color: #fff !important;
+				font-weight: 600;
+			}
+			#wp-admin-bar-mlx-mcs-status > .ab-item:hover {
+				background-color: %1$s !important;
+				opacity: 0.85;
+			}',
+			sanitize_hex_color( $bg_color )
+		);
+
+		wp_add_inline_style( 'admin-bar', $css );
 	}
 
 	/**

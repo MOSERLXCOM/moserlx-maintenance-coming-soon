@@ -3,7 +3,7 @@
  * Plugin Name: Maintenance & Coming Soon by MOSERLX
  * Plugin URI:  https://moserlx.com
  * Description: Puts a WordPress site into maintenance or coming soon mode with role-based access, IP whitelist, passphrase bypass, and correct HTTP status codes.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      MOSERLX Team
  * Author URI:  https://moserlx.com
  * License:     GPL-2.0-or-later
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MLX_MCS_VERSION', '1.0.0' );
+define( 'MLX_MCS_VERSION', '1.1.0' );
 define( 'MLX_MCS_PLUGIN_FILE', __FILE__ );
 define( 'MLX_MCS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'MLX_MCS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
