@@ -4,7 +4,7 @@ Tags: maintenance, coming soon, under construction, maintenance mode
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,9 @@ A lightweight plugin to put your site into maintenance or coming soon mode. Key 
 * WP-login and wp-admin are never blocked
 
 == Changelog ==
+
+= 1.1.1 - 2026-09-24 =
+* Added automatic update notifications via Plugin Update Checker — the plugin now checks GitHub Releases and notifies you in the WordPress admin when a new version is available.
 
 = 1.1.0 - 2026-09-24 =
 * New: Admin bar now shows a status indicator ("Maintenance: ON" / "Coming Soon: ON") when the plugin is active, visible only to administrators. Clicking it links directly to the settings page.
