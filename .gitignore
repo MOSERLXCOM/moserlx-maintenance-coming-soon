@@ -12,3 +12,6 @@ desktop.ini
 # Build artifacts (future-proofing)
 node_modules/
 vendor/
+
+# Exception: bundled PUC dependencies are not Composer-managed
+!includes/update/vendor/
